@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import settings
-from eaglet.decorator import param_required
-from eaglet.core import api_resource
-from eaglet.core import watchdog
-from eaglet.core.wxapi import get_weixin_api
+from rust.decorator import param_required
 from business import model as business_model
 
 COUNT_PER_PAGE = 20

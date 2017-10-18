@@ -10,11 +10,7 @@ import settings
 from client import Client
 from db.account.models import User, UserProfile
 from util import string_util
-from db.member import models as member_models
-from db.mall import models as mall_models
 import logging
-
-# from business.account.member import Member
 
 tc = None
 
@@ -91,51 +87,8 @@ def get_user_id_for(username):
 	# 	username = 'testplatform'
 	return User.get(User.username == username).id
 
-def get_corp_id_for(corp_name):
-	return get_user_id_for(corp_name)
-
-def get_corp_name_by_corp_id(corp_id):
-	return User.get(id=corp_id).username
-
 def get_user_for(username):
 	return User.get(User.username == username)
-
-
-def is_weizoom_corp(corp_id):
-	return UserProfile.select().dj_where(user_id=corp_id).first().webapp_type == 2
-
-
-def get_member_for(username, webapp_id):
-	"""
-	获取username对应的会员
-	"""
-	if isinstance(username, unicode):
-		member_nickname_str = username.encode('utf-8')
-	else:
-		member_nickname_str = username
-	username_hexstr = string_util.byte_to_hex(member_nickname_str)
-	buf = []
-	buf.append('=======================')
-	buf.append(webapp_id)
-	buf.append(username_hexstr)
-	buf.append('=======================')
-	print '\n'.join(buf)
-	try:
-		return member_models.Member.get(webapp_id=webapp_id, username=username)
-	except:
-		member = member_models.Member(id=1, grade_id=0)
-		return member
-
-
-###########################################################################
-# nginx: 模拟nginx的转换
-###########################################################################
-def nginx(url):
-	if url.startswith('/workbench/'):
-		return '/termite%s' % url
-	else:
-		return url
-
 
 def get_date(str):
 	"""
@@ -342,28 +295,6 @@ def supper_assert(expected, actual, ignore_key):
 # assert_dict: 验证expected中的数据都出现在了actual中
 ###########################################################################
 def assert_dict(expected, actual, ignore_keys=None):
-	# global tc
-	# is_dict_actual = isinstance(actual, dict)
-	# for key in expected:
-	# 	expected_value = expected[key]
-	# 	if is_dict_actual:
-	# 		actual_value = actual[key]
-	# 	else:
-	# 		actual_value = getattr(actual, key)
-	#
-	# 	if isinstance(expected_value, dict):
-	# 		assert_dict(expected_value, actual_value)
-	# 	elif isinstance(expected_value, list):
-	# 		assert_list(expected_value, actual_value, key)
-	# 	else:
-	# 		expected_value, actual_value = convert_to_same_type(expected_value, actual_value)
-	# 		try:
-	# 			tc.assertEquals(expected_value, actual_value)
-	# 		except Exception, e:
-	# 			items = ['\n<<<<<', 'e: %s' % str(expected), 'a: %s' % str(actual), 'key: %s' % key, e.args[0], '>>>>>\n']
-	# 			e.args = ('\n'.join(items),)
-	# 			print('\n'.join(items))
-	# 			raise e
 	supper_assert(expected, actual, ignore_keys)
 
 
@@ -371,22 +302,6 @@ def assert_dict(expected, actual, ignore_keys=None):
 # assert_list: 验证expected中的数据都出现在了actual中
 ###########################################################################
 def assert_list(expected, actual, ignore_keys=None):
-	# global tc
-	# tc.assertEquals(len(expected), len(actual), "list %s's length is not equals. e:%d != a:%d" % (key, len(expected), len(actual)))
-	#
-	# for i in range(len(expected)):
-	# 	expected_obj = expected[i]
-	# 	actual_obj = actual[i]
-	# 	if isinstance(expected_obj, dict):
-	# 		assert_dict(expected_obj, actual_obj)
-	# 	else:
-	# 		expected_obj, actual_obj = convert_to_same_type(expected_obj, actual_obj)
-	# 		try:
-	# 			tc.assertEquals(expected_obj, actual_obj)
-	# 		except Exception, e:
-	# 			items = ['\n<<<<<', 'e: %s' % str(expected), 'a: %s' % str(actual), 'key: %s' % key, e.args[0], '>>>>>\n']
-	# 			e.args = ('\n'.join(items),)
-	# 			raise e
 	supper_assert(expected, actual, ignore_keys)
 
 

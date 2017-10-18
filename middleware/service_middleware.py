@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from db.account import models as account_models
-from eaglet.core.cache import utils as cache_util
+from rust.core.cache import utils as cache_util
 
 class ApiAuthMiddleware(object):
 	def process_request(self, req, resp):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from eaglet.core import watchdog
+from rust.core import watchdog
 
 from business.corporation.corporation import Corporation
 from business.corporation.corporation_factory import CorporationFactory

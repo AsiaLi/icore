@@ -9,7 +9,7 @@ IS_REGISTER_STRATEGIES = False
 class RegisterSystemStrategyMiddleware(object):
 	"""
 	目前没有合适的位置对strategy进行初始化，放在middleware中
-	TODO: 在eaglet中加入app.create_app时间点的hook机制
+	TODO: 在rust中加入app.create_app时间点的hook机制
 	"""
 	def process_request(sel, req, resp):
 		global IS_REGISTER_STRATEGIES

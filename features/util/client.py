@@ -9,7 +9,6 @@ import re
 import mimetypes
 from copy import copy
 from io import BytesIO
-from eaglet.core import watchdog
 
 import six
 from six.moves.urllib.parse import unquote, urlparse, urlsplit
@@ -168,7 +167,7 @@ class FakeResponse(object):
 class ClientHandler(object):
     def __init__(self, enforce_csrf_checks=True, *args, **kwargs):
         self.enforce_csrf_checks = enforce_csrf_checks
-        from eaglet import apps
+        from rust import apps
         self.app = apps.create_app()
 
     def __call__(self, environ):

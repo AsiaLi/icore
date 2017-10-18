@@ -5,7 +5,7 @@ import inspect
 
 from util.command import BaseCommand
 
-from eaglet.core.db import models
+from rust.core.db import models
 import peewee
 
 class Command(BaseCommand):

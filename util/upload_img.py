@@ -1,28 +1,20 @@
 # -*- coding: utf-8 -*-
 
-__author__ = 'bert'
-
 import base64
 import time
 from datetime import datetime
-import urllib
 import os
-import sys
-import random
 try:
 	from PIL import Image
 except:
 	import Image
 
-from util import upyun_util
 import settings
-from core.exceptionutil import unicode_full_stack
-from eaglet.core import watchdog
 
 ########################################################################
 # save_base64_img_file_local_for_webapp: 存储手机上传的图片
 ########################################################################
-def save_base64_img_file_local_for_webapp(owner_id, ajax_file):
+def save_base64_img_file_local(owner_id, ajax_file):
 	date = time.strftime('%Y%m%d')
 	dir_path_suffix = 'webapp/%d_%s' % (owner_id, date)
 	dir_path = os.path.join(settings.UPLOAD_DIR, dir_path_suffix)
@@ -40,18 +32,7 @@ def save_base64_img_file_local_for_webapp(owner_id, ajax_file):
 	image_file.write(image_content)
 	image_file.close()
 
-	if __validate_image(ajax_path):
-		try:
-			image_path = upyun_util.upload_image_to_upyun(ajax_path,'/upload/%s/%s' % (dir_path_suffix, file_name))
-			return image_path
-		except:
-			notify_msg = u"上传图片到又拍云时失败, cause:\n{}".format(unicode_full_stack())
-			watchdog.error(notify_msg)
-			return None
-			#return '/static/upload/%s/%s' % (dir_path_suffix, file_name)
-		#return '/static/upload/%s/%s' % (dir_path_suffix, file_name)
-	else:
-		return None
+	return '/static/upload/%s/%s' % (dir_path_suffix, file_name)
 
 
 ########################################################################
@@ -62,7 +43,6 @@ def __validate_image(path):
 		im = Image.open(path)
 		im.load()
 		return True
-		#image is validate
 	except:
 		import sys
 		import traceback
