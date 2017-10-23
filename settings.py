@@ -6,16 +6,22 @@ import logging
 PROJECT_HOME = os.path.dirname(os.path.abspath(__file__))
 
 MODE = os.environ.get('_SERVICE_MODE', 'develop')
+DEBUG = MODE == 'develop'
 DEV_SERVER_MULTITHREADING = False
-DB_HOST = os.environ.get('DB_HOST', 'db.dev.com')
-DB_PORT = os.environ.get('DB_PORT', '3306')
-DB_PASSWORD = os.environ.get('DB_PASSWORD', 'njnarong')
+
+DB_NAME = os.environ.get('DB_NAME', 'test')
+DB_USER = os.environ.get('DB_USER', 'test')
+DB_HOST = os.environ.get('DB_HOST', 'test')
+DB_PORT = os.environ.get('DB_PORT', '3333')
+DB_PASSWORD = os.environ.get('DB_PASSWORD', 'test')
+
+print os.environ
 
 DATABASES = {
     'default': {
         'ENGINE': 'mysql+retry',
-        'NAME': 'emall',
-        'USER': 'peanut',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
         'PORT': DB_PORT,
@@ -23,30 +29,24 @@ DATABASES = {
     }
 }
 
-
 MIDDLEWARES = [
 
 ]
 
 #信息输出配置
-DUMP_API_CALL_RESULT = True
-DUMP_FORMATTED_INNER_ERROR_MSG = False
 ENABLE_CONSOLE = os.environ.get('_ENABLE_API_SERVICE_CONSOLE', '0') == '1'
 
 # settings for WAPI Logger
 if 'develop' == MODE:
     ENABLE_SQL_LOG = False #是否dump peewee产生的sql查询
-    SERVICE_HOST = '127.0.0.1:8004'
+    DUMP_API_CALL_RESULT = True
+    DUMP_FORMATTED_INNER_ERROR_MSG = True
+    SERVICE_HOST = '127.0.0.1:8000'
 else:
     ENABLE_SQL_LOG = False #是否dump peewee产生的sql查询
+    DUMP_API_CALL_RESULT = False
+    DUMP_FORMATTED_INNER_ERROR_MSG = False
     SERVICE_HOST = None
-
-if 'develop' == MODE:
-    DEBUG = True
-elif 'test' == MODE:
-    DEBUG = True
-else:
-    DEBUG = False
 
 
 UPLOAD_DIR = os.path.join(PROJECT_HOME, 'static', 'upload')  # 文件上传路径
