@@ -2,17 +2,13 @@
 from datetime import datetime
 import logging
 
-from business import model as business_model
-from gaia_conf import TOPIC
-from bdem import msgutil
-
-from business.corporation.corporation_factory import CorporationFactory
-from business.account.webapp_user_repository import WebappUserRepository
+from rust.core import business
 
 INSTANCE = None
 
-class EventBus(business_model.Service):
+class EventBus(business.Service):
 	"""
+	同步状态
 	发送消息的服务
 	"""
 	@classmethod
@@ -24,7 +20,7 @@ class EventBus(business_model.Service):
 		return INSTANCE
 
 	def __init__(self, corp, member):
-		business_model.Service.__init__(self, corp, member)
+		business.Service.__init__(self, corp, member)
 		self.event2handlers = {}
 
 	def register(self, event, handler):
@@ -43,12 +39,8 @@ class EventBus(business_model.Service):
 			return
 
 		data['_time'] = datetime.now().strftime('%Y%m%d%H%M%S')
-		data['_corp'] = CorporationFactory.get()
-		data['_member'] = WebappUserRepository.get_current_webapp_user()
 		for handler in handlers:
 			handler(event, data)
-
-
 
 def event_handler(event):
 	"""

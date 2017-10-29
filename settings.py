@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-import logging
 
 PROJECT_HOME = os.path.dirname(os.path.abspath(__file__))
 
-MODE = os.environ.get('_SERVICE_MODE', 'develop')
+MODE = os.environ.get('MODE', 'develop')
 DEBUG = MODE == 'develop'
 DEV_SERVER_MULTITHREADING = False
 
@@ -14,8 +13,6 @@ DB_USER = os.environ.get('DB_USER', 'test')
 DB_HOST = os.environ.get('DB_HOST', 'test')
 DB_PORT = os.environ.get('DB_PORT', '3333')
 DB_PASSWORD = os.environ.get('DB_PASSWORD', 'test')
-
-print os.environ
 
 DATABASES = {
     'default': {

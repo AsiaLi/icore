@@ -2,11 +2,10 @@
 
 import os
 import inspect
-
-from util.command import BaseCommand
-
-from rust.core.db import models
 import peewee
+
+from rust.command.base_command import BaseCommand
+from rust.core.base_db_models import Model
 
 class Command(BaseCommand):
 	help = ""
@@ -32,7 +31,7 @@ class Command(BaseCommand):
 				print file_path, ' ', module_name
 				module = __import__(module_name, {}, {}, ['*',])
 				for key, value in module.__dict__.items():
-					if inspect.isclass(value) and issubclass(value, models.Model) and value.__module__ == module.__name__:
+					if inspect.isclass(value) and issubclass(value, Model) and value.__module__ == module.__name__:
 						db_model = value
 						db_table = db_model._meta.db_table
 						if db_table not in get_existed_models():

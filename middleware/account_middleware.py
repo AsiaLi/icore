@@ -1,31 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from rust.core import watchdog
+from rust.core.base_middleware import BaseMiddleware
 
-from business.corporation.corporation import Corporation
-from business.corporation.corporation_factory import CorporationFactory
-
-class AccountMiddleware(object):
+class AccountMiddleware(BaseMiddleware):
 	def process_request(sel, req, resp):
-		if '/user/access_token' in req.path or '/console' in req.path:
-			watchdog.info("skipped in WebAppAccountMiddleware. req.path: {}".format(req.path))
-			return
-
 		if '/webapp.' in req.path:
-			watchdog.info("skipped in WebAppAccountMiddleware. req.path: {}".format(req.path))
+			print 'skip webapp request'
 			return
 
 		if '/static/' in req.path:
 			return
-
-		if '/pay/dlb_callback' in req.path:
-			return
-		
-		if '/express/callback' in req.path:
-			return
-
-		if not req.context.get('corp'):
-			corp_id = req.params.get('corp_id')
-			if corp_id:
-				req.context['corp'] = Corporation(int(corp_id))
-				CorporationFactory.set(req.context['corp'])
+	def process_response(self, request, response, resource):
+		pass

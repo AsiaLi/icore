@@ -1,5 +1,5 @@
 #coding: utf8
-from rust.core.db import models
+from rust.core import base_db_models as models
 
 import datetime
 

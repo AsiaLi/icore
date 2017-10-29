@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from rust.decorator import param_required
-from business import model as business_model
+from rust.core.decorator import param_required
+from rust.core import business
 
 COUNT_PER_PAGE = 20
 
-class PageInfo(business_model.Model):
+class PageInfo(business.Model):
     """
-    微信service
+    分页
     """
     __slots__ = (
         'cur_page',

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import logging
-
-logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(filename)s - %(message)s')
+from rust.core.base_middleware import BaseMiddleware
 
 IS_REGISTER_STRATEGIES = False
 
-class RegisterSystemStrategyMiddleware(object):
+class RegisterSystemStrategyMiddleware(BaseMiddleware):
 	"""
 	目前没有合适的位置对strategy进行初始化，放在middleware中
 	TODO: 在rust中加入app.create_app时间点的hook机制
@@ -21,4 +19,7 @@ class RegisterSystemStrategyMiddleware(object):
 				for strategy in strategies:
 					module_name = strategy
 					module = __import__(module_name, {}, {}, ['*',])
-					logging.info('register %s' % strategy)		
+					print 'register %s' % strategy
+
+	def process_response(self, request, response, resource):
+		pass
