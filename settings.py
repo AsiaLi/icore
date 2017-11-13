@@ -27,11 +27,14 @@ DATABASES = {
 }
 
 MIDDLEWARES = [
-
+    'middleware.account_middleware.AccountMiddleware',
 ]
 
 #信息输出配置
 ENABLE_CONSOLE = os.environ.get('_ENABLE_API_SERVICE_CONSOLE', '0') == '1'
+
+#是否允许跨域访问
+ACCESS_CONTROL_OPEN = True
 
 # settings for WAPI Logger
 if 'develop' == MODE:

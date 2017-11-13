@@ -3,4 +3,5 @@
 .idea/*
 *.DS_Store
 static/upload
-config/*_env.py
+start_dev_server.sh
+new_member_config.py

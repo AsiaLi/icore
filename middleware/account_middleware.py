@@ -2,7 +2,7 @@
 
 from rust.core.base_middleware import BaseMiddleware
 
-from business.user.user import User
+from business.member.member import Member
 
 
 class AccountMiddleware(BaseMiddleware):
@@ -14,12 +14,10 @@ class AccountMiddleware(BaseMiddleware):
 		if '/static/' in req.path:
 			return
 
-		if not req.context.get('user'):
-			user_id = req.params.get('user_id')
-			if user_id:
-				user = User(user_id)
-				req.context['user'] = user
-
+		member_id = req.params.get('member_id')
+		if member_id:
+			member = Member(member_id)
+			req.context['member'] = member
 
 	def process_response(self, request, response, resource):
 		pass

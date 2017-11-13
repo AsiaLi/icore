@@ -477,7 +477,7 @@ class Client(RequestFactory):
     """
     A class that can act as a client for testing purposes.
 
-    It allows the user to compose GET and POST requests, and
+    It allows the member to compose GET and POST requests, and
     obtain the response that the server gave to those requests.
     The server Response objects are annotated with the details
     of the contexts and templates that were rendered during the
@@ -489,7 +489,7 @@ class Client(RequestFactory):
     This is not intended as a replacement for Twill/Selenium or
     the like - it is here to allow testing against the
     contexts and templates produced by a view, rather than the
-    HTML rendered to the end-user.
+    HTML rendered to the end-member.
     """
     def __init__(self, enforce_csrf_checks=False, **defaults):
         super(Client, self).__init__(**defaults)
@@ -651,7 +651,7 @@ class Client(RequestFactory):
         Sets the Factory to appear as if it has successfully logged into a site.
 
         Returns True if login is possible; False if the provided credentials
-        are incorrect, or the user is inactive, or if the sessions framework is
+        are incorrect, or the member is inactive, or if the sessions framework is
         not available.
         """
         user = authenticate(**credentials)
@@ -688,9 +688,9 @@ class Client(RequestFactory):
 
     def logout(self):
         """
-        Removes the authenticated user's cookies and session object.
+        Removes the authenticated member's cookies and session object.
 
-        Causes the authenticated user to be logged out.
+        Causes the authenticated member to be logged out.
         """
         self.user = None
         self.cookies = SimpleCookie()

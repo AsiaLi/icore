@@ -8,7 +8,7 @@ import six
 
 import settings
 from client import Client
-from db.account.models import User, UserProfile
+from db.member.models import User, UserProfile
 from util import string_util
 import logging
 
@@ -39,7 +39,7 @@ class WeappClient(Client):
 
 	def reset(self):
 		self.cookies = SimpleCookie()
-		if hasattr(self, 'user'):
+		if hasattr(self, 'member'):
 			self.user = User()
 
 
