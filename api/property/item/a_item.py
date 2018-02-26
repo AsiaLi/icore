@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-from business.property.item.property_item_factory import PropertyItemFactory
-
-__author__ = 'Asia'
-
+from rust.core.business import ParamObject
 from rust.core.decorator import param_required
 from rust.core import api_resource
 
-from api import ParamObject
+from business.property.item.property_item_factory import PropertyItemFactory
 
 class AItem(api_resource.ApiResource):
     """

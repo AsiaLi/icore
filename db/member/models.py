@@ -17,8 +17,8 @@ class Member(models.Model):
 	"""
 	name = models.CharField(max_length=30)
 	role = models.IntegerField(MEMBER_ROLE['DAD'])
-	email = models.EmailField(default='')
-	phone = models.CharField(default='')
+	email = models.CharField(default='', max_length=1024)
+	phone = models.CharField(default='', max_length=26)
 	is_active = models.BooleanField(default=True)
 	is_super = models.BooleanField(default=False)
 	password = models.CharField(max_length=120)

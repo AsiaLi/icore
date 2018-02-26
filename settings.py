@@ -5,14 +5,14 @@ import os
 PROJECT_HOME = os.path.dirname(os.path.abspath(__file__))
 
 MODE = os.environ.get('MODE', 'develop')
-DEBUG = MODE == 'develop'
-DEV_SERVER_MULTITHREADING = False
+DEBUG = (os.environ.get('_DEBUG', '0') == '1')
+SERVICE_NAME = 'icore'
 
-DB_NAME = os.environ.get('DB_NAME', 'test')
-DB_USER = os.environ.get('DB_USER', 'test')
-DB_HOST = os.environ.get('DB_HOST', 'test')
-DB_PORT = os.environ.get('DB_PORT', '3333')
-DB_PASSWORD = os.environ.get('DB_PASSWORD', 'test')
+DB_HOST = os.environ.get('_DB_HOST', 'db.dev.com')
+DB_NAME = os.environ.get('_DB_NAME', 'icore')
+DB_USER = os.environ.get('_DB_USER', 'aix')
+DB_PORT = os.environ.get('_DB_PORT', '3306')
+DB_PASSWORD = os.environ.get('_DB_PASSWORD', 'aix')
 
 DATABASES = {
     'default': {
@@ -31,26 +31,25 @@ MIDDLEWARES = [
 ]
 
 #信息输出配置
-ENABLE_CONSOLE = os.environ.get('_ENABLE_API_SERVICE_CONSOLE', '0') == '1'
-
-#是否允许跨域访问
-ACCESS_CONTROL_OPEN = True
-
-# settings for WAPI Logger
-if 'develop' == MODE:
-    ENABLE_SQL_LOG = False #是否dump peewee产生的sql查询
-    DUMP_API_CALL_RESULT = True
-    DUMP_FORMATTED_INNER_ERROR_MSG = True
-    SERVICE_HOST = '127.0.0.1:8000'
-else:
-    ENABLE_SQL_LOG = False #是否dump peewee产生的sql查询
-    DUMP_API_CALL_RESULT = False
-    DUMP_FORMATTED_INNER_ERROR_MSG = False
-    SERVICE_HOST = None
-
+DUMP_API_CALL_RESULT = True
+ENABLE_CONSOLE = (os.environ.get('_ENABLE_API_CONSOLE', '1') == '1')
+SERVICE_HOST = '127.0.0.1:8000'
 
 UPLOAD_DIR = os.path.join(PROJECT_HOME, 'static', 'upload')  # 文件上传路径
 UPLOAD_HTTP_PATH = '/static/upload'
+
+#无需经过中间件的资源
+DIRECT_PATHS = [
+    '/static/',
+    '/console',
+    '/logined_user/',
+]
+
+RUST_RESOURCES = [
+    'test',
+    'user',
+    'permission',
+]
 
 def load_custom_configs():
     configs = {}
